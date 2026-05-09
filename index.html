@@ -268,21 +268,21 @@ footer {
     It's in beta. Held together with hope and duct tape, but the bones are good. You also get to be on the <strong>extremely selective, prestigious, and glorious</strong> list of testers.
   </div>
 
-  <form id="signup" action="YOUR_KIT_FORM_ENDPOINT" method="POST">
+  <form id="signup" method="POST">
     <label class="field-label" for="email">Your email</label>
     <input type="email" id="email" name="email_address" required placeholder="you@example.com" autocomplete="email">
     <p class="hint">Use your Google Play email if you're going for the Android beta.</p>
 
     <div class="choices">
       <label class="choice">
-        <input type="radio" name="fields[audience]" value="android_beta" required>
+        <input type="radio" name="audience" value="android_beta" required>
         <span class="choice-text">
           <span class="choice-title">I have Google Play, sign me up for the beta</span>
           <span class="choice-sub">You'll get a Play Store invite to install Relog.</span>
         </span>
       </label>
       <label class="choice">
-        <input type="radio" name="fields[audience]" value="ios_waitlist">
+        <input type="radio" name="audience" value="ios_waitlist">
         <span class="choice-text">
           <span class="choice-title">No Android, ping me when iOS lands</span>
           <span class="choice-sub">One email when the iOS version is real. That's it.</span>
@@ -311,6 +311,11 @@ footer {
 
 <script>
 (function () {
+  var ENDPOINTS = {
+    android_beta: 'https://app.kit.com/forms/9424658/subscriptions',
+    ios_waitlist: 'https://app.kit.com/forms/9424663/subscriptions'
+  };
+
   var form = document.getElementById('signup');
   var btn = document.getElementById('submit-btn');
   var success = document.getElementById('success');
@@ -321,15 +326,20 @@ footer {
 
     if (form.querySelector('.honeypot').value) return;
 
+    var picked = form.querySelector('input[name="audience"]:checked');
+    if (!picked) return;
+    var endpoint = ENDPOINTS[picked.value];
+
     error.classList.remove('show');
     btn.disabled = true;
     btn.textContent = 'Signing you up...';
 
-    var formData = new FormData(form);
+    var fd = new FormData();
+    fd.append('email_address', form.querySelector('#email').value);
 
-    fetch(form.action, {
+    fetch(endpoint, {
       method: 'POST',
-      body: formData,
+      body: fd,
       mode: 'no-cors'
     })
       .then(function () {
