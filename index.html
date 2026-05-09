@@ -250,6 +250,18 @@ footer {
   color: var(--soft);
 }
 
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  transition: opacity 0.15s;
+}
+
+a:hover { opacity: 0.75; }
+
+.tag a { color: inherit; }
+
 @media (max-width: 480px) {
   h1 { font-size: 1.75rem; }
   form { padding: 1.5rem; }
@@ -260,9 +272,9 @@ footer {
 </head>
 <body>
 <main class="wrap">
-  <span class="tag">Relog beta</span>
+  <span class="tag"><a href="https://play.google.com/store/apps/details?id=com.relogapp.android" target="_blank" rel="noopener">Relog</a> beta</span>
   <h1>Remember what your friends <em>mentioned</em> last time.</h1>
-  <p class="lede">I kept forgetting to ask about the big thing my friends told me (the surgery, the new job, the cat that ran off). So I made <strong>Relog</strong>, an app that logs interactions with friends and reminds you to follow up next time.</p>
+  <p class="lede">I kept forgetting to ask about the big thing my friends told me (the surgery, the new job, the cat that ran off). So I made <strong><a href="https://play.google.com/store/apps/details?id=com.relogapp.android" target="_blank" rel="noopener">Relog</a></strong>, an app that logs interactions with friends and reminds you to follow up next time.</p>
 
   <div class="callout">
     It's in alpha testing with big updates coming soon, but good enough to ship for now! Sign up to get on the <strong>extremely selective, prestigious, and glorious</strong> list of alpha-testers.
@@ -303,7 +315,7 @@ footer {
     <p>Try again in a minute, or send me an email directly at 7ivingstone7ee@gmail.com and I'll add you manually.</p>
   </div>
 
-  <footer>Made by Livingstone, who keeps forgetting things </footer>
+  <footer>Made by Livingstone, who wants to become a better friend </footer>
 </main>
 
 <script>
