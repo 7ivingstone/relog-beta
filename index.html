@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relog beta</title>
+<meta name="description" content="Sign up for the Relog Android beta or get pinged when iOS lands.">
+<meta property="og:title" content="Relog beta">
+<meta property="og:description" content="An app that remembers what your friends mentioned last time. Currently in beta.">
+<meta property="og:type" content="website">
+<style>
+:root {
+  --warm: #f7f3ed;
+  --ink: #2a2a2a;
+  --accent: #d97757;
+  --accent-dark: #b35a3f;
+  --soft: #6b6b6b;
+  --line: #e6dfd3;
+  --success: #4a7c59;
+  --success-bg: #eef5f0;
+  --error-bg: #fdf0ed;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  background: var(--warm);
+  color: var(--ink);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: 560px;
+  width: 100%;
+}
+
+.tag {
+  display: inline-block;
+  background: var(--ink);
+  color: var(--warm);
+  padding: 0.3rem 0.85rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+h1 em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.lede {
+  font-size: 1.0625rem;
+  color: var(--soft);
+  margin-bottom: 1.5rem;
+}
+
+.lede strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.callout {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+
+.callout strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+form {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.field-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+input[type="email"] {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--warm);
+  margin-bottom: 0.5rem;
+  font-family: inherit;
+  color: var(--ink);
+  transition: border-color 0.15s, background 0.15s;
+}
+
+input[type="email"]:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: white;
+}
+
+.hint {
+  font-size: 0.8125rem;
+  color: var(--soft);
+  margin-bottom: 1.5rem;
+}
+
+.choices { margin-bottom: 1.5rem; }
+
+.choice {
+  display: flex;
+  align-items: flex-start;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.choice:hover {
+  border-color: var(--accent);
+  background: var(--warm);
+}
+
+.choice:has(input:checked) {
+  border-color: var(--accent);
+  background: var(--warm);
+}
+
+.choice input[type="radio"] {
+  margin-right: 0.75rem;
+  margin-top: 0.3rem;
+  flex-shrink: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.choice-text { flex: 1; }
+
+.choice-title {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+  font-size: 0.95rem;
+}
+
+.choice-sub {
+  display: block;
+  font-size: 0.825rem;
+  color: var(--soft);
+}
+
+button {
+  width: 100%;
+  background: var(--accent);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.875rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, opacity 0.15s;
+}
+
+button:hover:not(:disabled) { background: var(--accent-dark); }
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.fine {
+  font-size: 0.8125rem;
+  color: var(--soft);
+  text-align: center;
+  margin-top: 1rem;
+  line-height: 1.5;
+}
+
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.state {
+  display: none;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  border: 1px solid;
+}
+
+.state.show { display: block; }
+
+.success {
+  background: var(--success-bg);
+  border-color: var(--success);
+  color: var(--success);
+}
+
+.error {
+  background: var(--error-bg);
+  border-color: var(--accent);
+  color: var(--accent-dark);
+}
+
+.state-title {
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  font-style: italic;
+}
+
+footer {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.8125rem;
+  color: var(--soft);
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 1.75rem; }
+  form { padding: 1.5rem; }
+  body { padding: 1rem 0.75rem; }
+  .callout { padding: 1rem 1.25rem; }
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <span class="tag">Relog beta</span>
+  <h1>Remember what your friends <em>mentioned</em> last time.</h1>
+  <p class="lede">I kept forgetting to ask about the big thing my friends told me (the surgery, the new job, the cat that ran off). So I made <strong>Relog</strong>, an app that logs interactions with friends and reminds you to follow up next time.</p>
+
+  <div class="callout">
+    It's in beta. Held together with hope and duct tape, but the bones are good. You also get to be on the <strong>extremely selective, prestigious, and glorious</strong> list of testers.
+  </div>
+
+  <form id="signup" action="YOUR_KIT_FORM_ENDPOINT" method="POST">
+    <label class="field-label" for="email">Your email</label>
+    <input type="email" id="email" name="email_address" required placeholder="you@example.com" autocomplete="email">
+    <p class="hint">Use your Google Play email if you're going for the Android beta.</p>
+
+    <div class="choices">
+      <label class="choice">
+        <input type="radio" name="fields[audience]" value="android_beta" required>
+        <span class="choice-text">
+          <span class="choice-title">I have Google Play, sign me up for the beta</span>
+          <span class="choice-sub">You'll get a Play Store invite to install Relog.</span>
+        </span>
+      </label>
+      <label class="choice">
+        <input type="radio" name="fields[audience]" value="ios_waitlist">
+        <span class="choice-text">
+          <span class="choice-title">No Android, ping me when iOS lands</span>
+          <span class="choice-sub">One email when the iOS version is real. That's it.</span>
+        </span>
+      </label>
+    </div>
+
+    <input type="text" name="b_hp" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+    <button type="submit" id="submit-btn">Sign me up</button>
+    <p class="fine">One email about Relog only. Unsubscribe anytime. No spam, no nonsense.</p>
+  </form>
+
+  <div class="state success" id="success">
+    <p class="state-title">You're in.</p>
+    <p>Welcome to the glorious list. Check your inbox for a confirmation email and click the link to lock it in.</p>
+  </div>
+
+  <div class="state error" id="error">
+    <p class="state-title">Something broke on my end.</p>
+    <p>Try again in a minute, or send me an email directly and I'll add you manually.</p>
+  </div>
+
+  <footer>Made by a real human who keeps forgetting things.</footer>
+</main>
+
+<script>
+(function () {
+  var form = document.getElementById('signup');
+  var btn = document.getElementById('submit-btn');
+  var success = document.getElementById('success');
+  var error = document.getElementById('error');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    if (form.querySelector('.honeypot').value) return;
+
+    error.classList.remove('show');
+    btn.disabled = true;
+    btn.textContent = 'Signing you up...';
+
+    var formData = new FormData(form);
+
+    fetch(form.action, {
+      method: 'POST',
+      body: formData,
+      mode: 'no-cors'
+    })
+      .then(function () {
+        form.style.display = 'none';
+        success.classList.add('show');
+        success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      })
+      .catch(function () {
+        error.classList.add('show');
+        btn.disabled = false;
+        btn.textContent = 'Sign me up';
+      });
+  });
+})();
+</script>
+</body>
+</html>
